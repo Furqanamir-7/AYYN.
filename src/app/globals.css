@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fff7e2;
+  --foreground: #2e2a2a;
+  --mauve: #b99ab3;
+  --mauve-dark: #9c7a96;
+  --blush: #ead9cf;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .brand-dot::after {
+    content: ".";
+    color: #b99ab3;
+    margin-left: 0.02em;
+  }
+}
+
+/* Soft selection */
+::selection {
+  background: #b99ab3;
+  color: #fff7e2;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -1,0 +1,9 @@
+.next
+node_modules
+.git
+.vercel
+out
+coverage
+*.log
+.env*.local
+tmp-previews
