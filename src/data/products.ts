@@ -132,8 +132,8 @@ export const products: Product[] = [
     category: "Press-Ons",
     collectionId: "soft-blush",
     description: "Peachy blush tips that flatter every skin tone.",
-    image: "/products/peach-blush-2.jpg",
-    images: ["/products/peach-blush-2.jpg", "/products/peach-blush.jpg"],
+    image: "/products/peach-blush.jpg",
+    images: ["/products/peach-blush.jpg", "/products/peach-blush-2.jpg"],
     badges: ["Reusable"],
     shapes: ["Almond", "Coffin", "Square"],
     waCollection: null,
@@ -538,14 +538,25 @@ export function getProductBySlug(slug: string) {
 }
 
 export function relatedProducts(product: Product, limit = 4) {
+  const caseProduct = products.find((p) => p.slug === "acrylic-nail-case");
+  const includeCase =
+    product.slug !== "acrylic-nail-case" && Boolean(caseProduct);
+  const restLimit = includeCase ? Math.max(limit - 1, 1) : limit;
+
   const same = products.filter(
-    (p) => p.slug !== product.slug && p.collectionId === product.collectionId
+    (p) =>
+      p.slug !== product.slug &&
+      p.slug !== "acrylic-nail-case" &&
+      p.collectionId === product.collectionId
   );
-  if (same.length >= limit) return same.slice(0, limit);
   const extras = products.filter(
-    (p) => p.slug !== product.slug && p.collectionId !== product.collectionId
+    (p) =>
+      p.slug !== product.slug &&
+      p.slug !== "acrylic-nail-case" &&
+      p.collectionId !== product.collectionId
   );
-  return [...same, ...extras].slice(0, limit);
+  const rest = [...same, ...extras].slice(0, restLimit);
+  return includeCase && caseProduct ? [...rest, caseProduct] : rest;
 }
 
 export function getCollection(id: string) {
