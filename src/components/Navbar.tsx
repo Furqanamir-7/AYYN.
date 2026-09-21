@@ -7,6 +7,7 @@ import { ShoppingBag, X } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { useCart } from "@/context/CartContext";
 import { BRAND, NAV_LINKS } from "@/lib/constants";
+import { TEMPLATE_ROOT, isTemplateHome, isTemplatePath } from "@/lib/template";
 
 function CuteMenuIcon({ open }: { open?: boolean }) {
   if (open) return null;
@@ -14,19 +15,19 @@ function CuteMenuIcon({ open }: { open?: boolean }) {
     <svg viewBox="0 0 40 40" className="h-7 w-7" aria-hidden>
       <path
         d="M20 9c-1.2 0-3.5-2.8-6-3.5C10.5 4.7 8 6.8 8.8 9c.6 1.8 3.2 2.4 5.5 1.8 1.5-.4 3.5-1.2 5.7-1.8Z"
-        fill="#B99AB3"
+        className="fill-mauve"
         opacity="0.9"
       />
       <path
         d="M20 9c1.2 0 3.5-2.8 6-3.5C29.5 4.7 32 6.8 31.2 9c-.6 1.8-3.2 2.4-5.5 1.8-1.5-.4-3.5-1.2-5.7-1.8Z"
-        fill="#9C7A96"
+        className="fill-mauve-dark"
         opacity="0.85"
       />
-      <circle cx="20" cy="9" r="2" fill="#EAD9CF" />
-      <circle cx="20" cy="9" r="1" fill="#B99AB3" />
-      <rect x="10" y="17" width="20" height="2.6" rx="1.3" fill="#9C7A96" />
-      <rect x="12" y="23" width="16" height="2.6" rx="1.3" fill="#B99AB3" />
-      <rect x="14" y="29" width="12" height="2.6" rx="1.3" fill="#9C7A96" />
+      <circle cx="20" cy="9" r="2" className="fill-blush" />
+      <circle cx="20" cy="9" r="1" className="fill-mauve" />
+      <rect x="10" y="17" width="20" height="2.6" rx="1.3" className="fill-mauve-dark" />
+      <rect x="12" y="23" width="16" height="2.6" rx="1.3" className="fill-mauve" />
+      <rect x="14" y="29" width="12" height="2.6" rx="1.3" className="fill-mauve-dark" />
     </svg>
   );
 }
@@ -88,7 +89,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (pathname !== "/") {
+    if (!isTemplateHome(pathname) && pathname !== "/") {
       setActive("");
       return;
     }
@@ -118,8 +119,11 @@ export default function Navbar() {
 
   function go(href: string) {
     setOpen(false);
-    if (pathname !== "/") {
-      router.push(`/${href}`);
+    const onHome = pathname === "/" || isTemplateHome(pathname);
+    if (!onHome) {
+      router.push(
+        isTemplatePath(pathname) ? `${TEMPLATE_ROOT}${href}` : `/${href}`
+      );
       return;
     }
     const el = document.querySelector(href);

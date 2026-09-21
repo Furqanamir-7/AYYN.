@@ -10,6 +10,7 @@ import {
   productDisplayPrice,
   productImages,
 } from "@/data/products";
+import { useSiteHref } from "@/hooks/useSiteHref";
 import ProductGallery from "./ProductGallery";
 import AddToBagControls from "./AddToBagControls";
 
@@ -21,9 +22,10 @@ export default function ProductCard({
   index?: number;
 }) {
   const router = useRouter();
+  const siteHref = useSiteHref();
   const gallery = productImages(product);
   const canSwipe = gallery.length > 1;
-  const href = `/products/${product.slug}`;
+  const href = siteHref(`/products/${product.slug}`);
 
   return (
     <motion.article

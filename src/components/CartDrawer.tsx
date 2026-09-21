@@ -8,9 +8,11 @@ import { Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatPKR, designBadgeLabel, productImages } from "@/data/products";
 import { cartLineId, lineDisplayName, lineUnitPrice, productFor } from "@/lib/order";
+import { useSiteHref } from "@/hooks/useSiteHref";
 
 export default function CartDrawer() {
   const router = useRouter();
+  const siteHref = useSiteHref();
   const {
     items,
     count,
@@ -107,7 +109,7 @@ export default function CartDrawer() {
                       Your pretty little bag is waiting for a set.
                     </p>
                     <Link
-                      href="/#collections"
+                      href={siteHref("/#collections")}
                       onClick={() => setOpen(false)}
                       className="mt-5 inline-flex rounded-full bg-mauve px-5 py-2.5 text-sm font-medium text-cream hover:bg-mauve-dark"
                     >
@@ -127,7 +129,7 @@ export default function CartDrawer() {
                           className="flex gap-3 rounded-2xl bg-blush/50 p-2.5 ring-1 ring-mauve/10"
                         >
                           <Link
-                            href={`/products/${product.slug}`}
+                            href={siteHref(`/products/${product.slug}`)}
                             onClick={() => setOpen(false)}
                             className="relative h-24 w-[72px] shrink-0 overflow-hidden rounded-xl bg-blush"
                           >
@@ -143,7 +145,7 @@ export default function CartDrawer() {
                             <div className="flex items-start justify-between gap-2">
                               <div className="min-w-0">
                                 <Link
-                                  href={`/products/${product.slug}`}
+                                  href={siteHref(`/products/${product.slug}`)}
                                   onClick={() => setOpen(false)}
                                   className="block truncate font-display text-base tracking-wide hover:text-mauve-dark"
                                 >
@@ -215,7 +217,7 @@ export default function CartDrawer() {
                   <button
                     type="button"
                     onClick={() => {
-                      router.push("/checkout");
+                      router.push(siteHref("/checkout"));
                       setOpen(false);
                     }}
                     className="mt-3 flex w-full items-center justify-center rounded-full bg-mauve py-3 text-sm font-medium text-cream transition hover:bg-mauve-dark"

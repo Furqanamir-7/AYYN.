@@ -1,4 +1,7 @@
+"use client";
+
 import BrandLogo from "./BrandLogo";
+import SiteLink from "./SiteLink";
 import { BRAND, NAV_LINKS, WA } from "@/lib/constants";
 
 export default function Footer() {
@@ -6,11 +9,13 @@ export default function Footer() {
     <footer className="mt-6 border-t border-blush bg-blush/40">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row md:items-start md:justify-between md:gap-8 md:py-7">
         <div className="max-w-xs">
-          <BrandLogo
-            size={120}
-            href="/#home"
-            className="h-8 w-auto sm:h-9"
-          />
+          <SiteLink href="/#home" className="inline-flex items-center" aria-label="AYYN. home">
+            <BrandLogo
+              size={120}
+              href={null}
+              className="h-8 w-auto sm:h-9"
+            />
+          </SiteLink>
           <p className="mt-2 text-xs leading-relaxed text-charcoal/70">
             {BRAND.tagline} Press-ons delivered nationwide.
           </p>
@@ -18,13 +23,13 @@ export default function Footer() {
 
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-charcoal/75">
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={`/${l.href}`} className="hover:text-mauve-dark">
+            <SiteLink key={l.href} href={`/${l.href}`} className="hover:text-mauve-dark">
               {l.label}
-            </a>
+            </SiteLink>
           ))}
-          <a href="/checkout" className="hover:text-mauve-dark">
+          <SiteLink href="/checkout" className="hover:text-mauve-dark">
             Checkout
-          </a>
+          </SiteLink>
         </div>
 
         <div className="text-xs text-charcoal/75">

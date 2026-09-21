@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
 import CartDrawer from "@/components/CartDrawer";
+import TemplateTheme from "@/components/TemplateTheme";
 import { CartProvider } from "@/context/CartContext";
 
 const display = Cormorant_Garamond({
@@ -88,12 +89,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${display.variable} ${sans.variable} font-sans antialiased bg-cream text-charcoal`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(location.pathname.indexOf("/template")===0)document.documentElement.classList.add("theme-maroon")}catch(e){}})();`,
+          }}
+        />
         <CartProvider>
           <LoadingScreen />
+          <TemplateTheme />
           <Navbar />
           <CartDrawer />
           <main className="min-h-[70vh]">

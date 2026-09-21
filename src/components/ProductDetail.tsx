@@ -15,6 +15,7 @@ import ProductGallery from "./ProductGallery";
 import ProductZoomLightbox from "./ProductZoomLightbox";
 import AddToBagControls from "./AddToBagControls";
 import ProductCard from "./ProductCard";
+import { useSiteHref } from "@/hooks/useSiteHref";
 
 export default function ProductDetail({
   product,
@@ -29,11 +30,12 @@ export default function ProductDetail({
   const collection = getCollection(product.collectionId);
   const fromPrice = product.options?.length;
   const price = productDisplayPrice(product);
+  const siteHref = useSiteHref();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
       <Link
-        href="/#collections"
+        href={siteHref("/#collections")}
         className="inline-flex items-center gap-1.5 text-xs font-medium tracking-wide text-mauve-dark transition hover:text-charcoal sm:text-sm"
       >
         <ArrowLeft className="h-3.5 w-3.5" />

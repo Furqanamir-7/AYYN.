@@ -44,33 +44,33 @@ function Bow({ className = "" }: { className?: string }) {
     <svg viewBox="0 0 64 64" fill="none" className={className}>
       <path
         d="M32 30c-2.5 0-8-6.5-14-8.5C10 19 4 24 6 30c1.5 4.5 8 6 14 4.5C24 33 29 31 32 30Z"
-        fill="#B99AB3"
+        className="fill-mauve"
         fillOpacity="0.85"
       />
       <path
         d="M32 30c2.5 0 8-6.5 14-8.5C54 19 60 24 58 30c-1.5 4.5-8 6-14 4.5C40 33 35 31 32 30Z"
-        fill="#9C7A96"
+        className="fill-mauve-dark"
         fillOpacity="0.8"
       />
       <path
         d="M32 30c-2.2 0-7 7-10 12-2.5 4-1 9 3.5 8.5 4-.5 7.5-6 8.5-10.5.4-1.8.3-5.5-2-10Z"
-        fill="#B99AB3"
+        className="fill-mauve"
         fillOpacity="0.7"
       />
       <path
         d="M32 30c2.2 0 7 7 10 12 2.5 4 1 9-3.5 8.5-4-.5-7.5-6-8.5-10.5-.4-1.8-.3-5.5 2-10Z"
-        fill="#9C7A96"
+        className="fill-mauve-dark"
         fillOpacity="0.65"
       />
-      <circle cx="32" cy="30" r="4.5" fill="#EAD9CF" />
-      <circle cx="32" cy="30" r="2.2" fill="#B99AB3" />
+      <circle cx="32" cy="30" r="4.5" className="fill-blush" />
+      <circle cx="32" cy="30" r="2.2" className="fill-mauve" />
     </svg>
   );
 }
 
 function Heart({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="#B99AB3">
+    <svg viewBox="0 0 24 24" className={`fill-mauve ${className}`}>
       <path d="M12 21s-6.7-4.35-9.33-8.1C.7 9.9 1.7 6.2 4.8 5.2c1.9-.6 3.9.1 5.1 1.6 1.2-1.5 3.2-2.2 5.1-1.6 3.1 1 4.1 4.7 2.13 7.7C18.7 16.65 12 21 12 21z" />
     </svg>
   );
@@ -78,7 +78,7 @@ function Heart({ className = "" }: { className?: string }) {
 
 function Sparkle({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="#9C7A96">
+    <svg viewBox="0 0 24 24" className={`fill-mauve-dark ${className}`}>
       <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" />
     </svg>
   );

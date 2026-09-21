@@ -19,6 +19,7 @@ import {
   type OrderDetails,
   type PlacedOrder,
 } from "@/lib/order";
+import { useSiteHref } from "@/hooks/useSiteHref";
 
 const emptyDetails: OrderDetails = {
   email: "",
@@ -45,6 +46,7 @@ function loadLastOrder(): PlacedOrder | null {
 
 export default function CheckoutClient() {
   const router = useRouter();
+  const siteHref = useSiteHref();
   const { items, subtotal, count, clear, hydrated } = useCart();
   const [details, setDetails] = useState<OrderDetails>(emptyDetails);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -74,9 +76,9 @@ export default function CheckoutClient() {
   useEffect(() => {
     if (!hydrated || !ready) return;
     if (step === "details" && items.length === 0 && !order) {
-      router.replace("/#collections");
+      router.replace(siteHref("/#collections"));
     }
-  }, [hydrated, items.length, order, ready, router, step]);
+  }, [hydrated, items.length, order, ready, router, siteHref, step]);
 
   function setField<K extends keyof OrderDetails>(key: K, value: OrderDetails[K]) {
     setDetails((d) => ({ ...d, [key]: value }));
@@ -349,7 +351,7 @@ export default function CheckoutClient() {
                     </p>
                   )}
                   <Link
-                    href="/#collections"
+                    href={siteHref("/#collections")}
                     className="mt-6 inline-flex rounded-full bg-mauve px-6 py-3 text-sm font-medium text-cream hover:bg-mauve-dark"
                   >
                     Back to shop

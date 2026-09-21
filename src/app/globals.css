@@ -8,6 +8,24 @@
   --mauve: #b99ab3;
   --mauve-dark: #9c7a96;
   --blush: #ead9cf;
+  --color-cream: 255 247 226;
+  --color-mauve: 185 154 179;
+  --color-mauve-dark: 156 122 150;
+  --color-blush: 234 217 207;
+  --color-charcoal: 46 42 42;
+}
+
+html.theme-maroon {
+  --background: #f1dfb7;
+  --foreground: #2e2a2a;
+  --mauve: #641020;
+  --mauve-dark: #4e0d19;
+  --blush: #f1dfb7;
+  --color-cream: 241 223 183;
+  --color-mauve: 100 16 32;
+  --color-mauve-dark: 78 13 25;
+  --color-blush: 241 223 183;
+  --color-charcoal: 46 42 42;
 }
 
 html {
@@ -29,15 +47,15 @@ body {
 
   .brand-dot::after {
     content: ".";
-    color: #b99ab3;
+    color: rgb(var(--color-mauve));
     margin-left: 0.02em;
   }
 }
 
 /* Soft selection */
 ::selection {
-  background: #b99ab3;
-  color: #fff7e2;
+  background: rgb(var(--color-mauve));
+  color: rgb(var(--color-cream));
 }
 
 /* Hide scrollbar for horizontal carousels */
