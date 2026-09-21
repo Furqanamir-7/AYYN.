@@ -3,8 +3,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { isTemplatePath } from "@/lib/template";
 
 export default function LoadingScreen() {
+  const pathname = usePathname();
+  const template = isTemplatePath(pathname);
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -49,13 +53,19 @@ export default function LoadingScreen() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="flex w-[min(72vw,220px)] flex-col items-center gap-5"
+            className={`flex flex-col items-center gap-5 ${
+              template ? "w-[min(78vw,260px)]" : "w-[min(72vw,220px)]"
+            }`}
           >
             <Image
-              src="/logo-monogram-tight.png"
+              src={
+                template
+                  ? "/logo-template-monogram.png"
+                  : "/logo-monogram-tight.png"
+              }
               alt="AYYN."
-              width={110}
-              height={110}
+              width={template ? 220 : 110}
+              height={template ? 220 : 110}
               priority
               className="object-contain"
             />

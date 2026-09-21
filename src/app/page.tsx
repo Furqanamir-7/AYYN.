@@ -4,7 +4,7 @@ import ReviewCard from "@/components/ReviewCard";
 import AnimatedSection from "@/components/AnimatedSection";
 import JsonLd from "@/components/JsonLd";
 import HeroDecor from "@/components/HeroDecor";
-import BrandLogo from "@/components/BrandLogo";
+import HeroIdentity from "@/components/HeroIdentity";
 import { reviews, reviewSummary } from "@/data/reviews";
 import { BRAND, WA } from "@/lib/constants";
 
@@ -80,16 +80,7 @@ export default function HomePage() {
       >
         <HeroDecor />
         <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-          <BrandLogo
-            variant="monogram"
-            size={200}
-            priority
-            href={null}
-            className="h-20 w-auto animate-float sm:h-28 md:h-36"
-          />
-          <h1 className="mt-1 font-display text-4xl tracking-[0.22em] text-mauve-dark sm:mt-2 sm:text-5xl sm:tracking-[0.28em] md:text-6xl lg:text-7xl">
-            AYYN<span className="text-mauve">.</span>
-          </h1>
+          <HeroIdentity />
           <p className="mt-3 max-w-md text-sm text-charcoal/75 sm:mt-4 sm:text-base md:text-lg">
             {BRAND.tagline}
           </p>

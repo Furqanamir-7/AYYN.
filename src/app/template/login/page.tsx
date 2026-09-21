@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TEMPLATE_ROOT } from "@/lib/template";
 
@@ -39,13 +40,20 @@ export default function TemplateLoginPage() {
         onSubmit={onSubmit}
         className="w-full max-w-sm rounded-[1.6rem] bg-blush/50 p-6 shadow-soft ring-1 ring-mauve/15 sm:p-8"
       >
-        <p className="text-[10px] uppercase tracking-[0.22em] text-mauve-dark">
+        <Image
+          src="/logo-template-emblem.png"
+          alt=""
+          width={160}
+          height={130}
+          className="mx-auto h-16 w-auto object-contain"
+        />
+        <p className="mt-4 text-center text-[10px] uppercase tracking-[0.22em] text-mauve-dark">
           Private
         </p>
-        <h1 className="mt-1 font-display text-3xl tracking-wide text-charcoal">
+        <h1 className="mt-1 text-center font-display text-3xl tracking-wide text-charcoal">
           AYYN. template
         </h1>
-        <p className="mt-2 text-sm text-charcoal/70">
+        <p className="mt-2 text-center text-sm text-charcoal/70">
           Maroon &amp; cream preview — not the live shop.
         </p>
         <label className="mt-5 block text-xs font-medium text-mauve-dark">
