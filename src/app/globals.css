@@ -16,15 +16,15 @@
 }
 
 html.theme-maroon {
-  --background: #d8c49c;
+  --background: #fff7e2;
   --foreground: #2e2a2a;
   --mauve: #641020;
   --mauve-dark: #4e0d19;
-  --blush: #cdb48a;
-  --color-cream: 216 196 156;
+  --blush: #f0e0c8;
+  --color-cream: 255 247 226;
   --color-mauve: 100 16 32;
   --color-mauve-dark: 78 13 25;
-  --color-blush: 205 180 138;
+  --color-blush: 240 224 200;
   --color-charcoal: 46 42 42;
 }
 
