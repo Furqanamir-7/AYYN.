@@ -37,20 +37,24 @@ function BagButton({
   bump,
   onClick,
   label = true,
+  invert = false,
 }: {
   count: number;
   bump: number;
   onClick: () => void;
   label?: boolean;
+  invert?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
-      className={`relative inline-flex items-center justify-center rounded-full bg-mauve text-cream shadow-sm transition hover:bg-mauve-dark active:scale-95 ${
-        label ? "gap-1.5 px-3 py-2 sm:px-4" : "h-10 w-10"
-      }`}
+      className={`relative inline-flex items-center justify-center rounded-full shadow-sm transition active:scale-95 ${
+        invert
+          ? "bg-cream text-mauve hover:bg-cream/90"
+          : "bg-mauve text-cream hover:bg-mauve-dark"
+      } ${label ? "gap-1.5 px-3 py-2 sm:px-4" : "h-10 w-10"}`}
     >
       <motion.span
         key={bump}
@@ -65,7 +69,13 @@ function BagButton({
         <span className="text-[11px] font-medium tracking-wide sm:text-sm">Bag</span>
       )}
       {count > 0 && (
-        <span className="absolute -right-1 -top-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-cream px-1 text-[9px] font-semibold text-mauve-dark ring-1 ring-mauve/30">
+        <span
+          className={`absolute -right-1 -top-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[9px] font-semibold ring-1 ${
+            invert
+              ? "bg-mauve text-cream ring-cream/40"
+              : "bg-cream text-mauve-dark ring-mauve/30"
+          }`}
+        >
           {count}
         </span>
       )}
@@ -80,6 +90,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("#home");
+  const template = isTemplatePath(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -133,15 +144,25 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b border-mauve/20 transition-all duration-300 ${
-          scrolled ? "bg-blush/95 backdrop-blur-md shadow-soft" : "bg-blush"
+        className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+          template
+            ? scrolled
+              ? "border-cream/15 bg-mauve/95 text-cream backdrop-blur-md shadow-soft"
+              : "border-cream/10 bg-mauve text-cream"
+            : scrolled
+              ? "border-mauve/20 bg-blush/95 backdrop-blur-md shadow-soft"
+              : "border-mauve/20 bg-blush"
         }`}
       >
         <div className="mx-auto grid h-14 max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-2 px-3 sm:px-4 lg:hidden">
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cream/80 shadow-sm ring-1 ring-mauve/25 transition active:scale-95"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl shadow-sm ring-1 transition active:scale-95 ${
+              template
+                ? "bg-cream/90 text-mauve ring-cream/30"
+                : "bg-cream/80 ring-mauve/25"
+            }`}
             aria-label="Open menu"
           >
             <CuteMenuIcon />
@@ -163,7 +184,13 @@ export default function Navbar() {
             />
           </a>
 
-          <BagButton count={count} bump={bump} onClick={() => setBagOpen(true)} label={false} />
+          <BagButton
+            count={count}
+            bump={bump}
+            onClick={() => setBagOpen(true)}
+            label={false}
+            invert={template}
+          />
         </div>
 
         <div className="mx-auto hidden h-14 max-w-6xl items-center gap-3 px-6 lg:flex">
@@ -193,9 +220,13 @@ export default function Navbar() {
                   go(link.href);
                 }}
                 className={`rounded-full px-2.5 py-1.5 text-sm tracking-wide transition ${
-                  active === link.href
-                    ? "bg-cream/80 font-medium text-mauve-dark"
-                    : "text-charcoal/75 hover:bg-cream/50 hover:text-mauve-dark"
+                  template
+                    ? active === link.href
+                      ? "bg-cream/90 font-medium text-mauve"
+                      : "text-cream/80 hover:bg-cream/15 hover:text-cream"
+                    : active === link.href
+                      ? "bg-cream/80 font-medium text-mauve-dark"
+                      : "text-charcoal/75 hover:bg-cream/50 hover:text-mauve-dark"
                 }`}
               >
                 {link.label}
@@ -204,7 +235,12 @@ export default function Navbar() {
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2">
-            <BagButton count={count} bump={bump} onClick={() => setBagOpen(true)} />
+            <BagButton
+              count={count}
+              bump={bump}
+              onClick={() => setBagOpen(true)}
+              invert={template}
+            />
           </div>
         </div>
       </header>
@@ -222,13 +258,19 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
             />
             <motion.aside
-              className="fixed left-0 top-0 z-[70] flex h-full w-[min(86vw,340px)] flex-col bg-cream shadow-soft lg:hidden"
+              className={`fixed left-0 top-0 z-[70] flex h-full w-[min(86vw,340px)] flex-col shadow-soft lg:hidden ${
+                template ? "bg-mauve text-cream" : "bg-cream"
+              }`}
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
             >
-              <div className="flex items-center justify-between border-b border-blush px-4 py-3.5">
+              <div
+                className={`flex items-center justify-between border-b px-4 py-3.5 ${
+                  template ? "border-cream/15" : "border-blush"
+                }`}
+              >
                 <BrandLogo
                   size={120}
                   href={null}
@@ -237,7 +279,9 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-blush/70 text-mauve-dark"
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-2xl ${
+                    template ? "bg-cream/90 text-mauve" : "bg-blush/70 text-mauve-dark"
+                  }`}
                   aria-label="Close menu"
                 >
                   <X className="h-4 w-4" />
@@ -259,9 +303,13 @@ export default function Navbar() {
                         go(link.href);
                       }}
                       className={`block rounded-2xl px-4 py-3 font-display text-xl tracking-[0.1em] transition ${
-                        active === link.href
-                          ? "bg-blush text-mauve-dark"
-                          : "text-charcoal hover:bg-blush/70"
+                        template
+                          ? active === link.href
+                            ? "bg-cream/90 text-mauve"
+                            : "text-cream hover:bg-cream/15"
+                          : active === link.href
+                            ? "bg-blush text-mauve-dark"
+                            : "text-charcoal hover:bg-blush/70"
                       }`}
                     >
                       {link.label}
@@ -270,18 +318,36 @@ export default function Navbar() {
                 ))}
               </nav>
 
-              <div className="border-t border-blush px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-                <p className="font-display text-base tracking-widest text-mauve-dark">
+              <div
+                className={`border-t px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] ${
+                  template ? "border-cream/15" : "border-blush"
+                }`}
+              >
+                <p
+                  className={`font-display text-base tracking-widest ${
+                    template ? "text-cream" : "text-mauve-dark"
+                  }`}
+                >
                   {BRAND.name}
                 </p>
-                <p className="mt-0.5 text-xs text-charcoal/70">{BRAND.tagline}</p>
+                <p
+                  className={`mt-0.5 text-xs ${
+                    template ? "text-cream/75" : "text-charcoal/70"
+                  }`}
+                >
+                  {BRAND.tagline}
+                </p>
                 <button
                   type="button"
                   onClick={() => {
                     setOpen(false);
                     setBagOpen(true);
                   }}
-                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-mauve py-2.5 text-sm font-medium text-cream hover:bg-mauve-dark"
+                  className={`mt-3 flex w-full items-center justify-center gap-2 rounded-full py-2.5 text-sm font-medium ${
+                    template
+                      ? "bg-cream text-mauve hover:bg-cream/90"
+                      : "bg-mauve text-cream hover:bg-mauve-dark"
+                  }`}
                 >
                   <ShoppingBag className="h-4 w-4" />
                   Open bag{count > 0 ? ` · ${count}` : ""}
