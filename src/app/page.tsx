@@ -255,7 +255,7 @@ export default function HomePage() {
       {/* REVIEWS */}
       <AnimatedSection
         id="reviews"
-        className="scroll-mt-16 mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12"
+        className="scroll-mt-16 mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12"
       >
         <ReviewsGallery />
       </AnimatedSection>

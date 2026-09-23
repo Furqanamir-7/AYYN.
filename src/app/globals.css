@@ -66,3 +66,41 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes marquee-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes marquee-down {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.ayyn-marquee-up {
+  animation: marquee-up var(--marquee-duration, 40s) linear infinite;
+}
+
+.ayyn-marquee-down {
+  animation: marquee-down var(--marquee-duration, 44s) linear infinite;
+}
+
+.ayyn-marquee-up:hover,
+.ayyn-marquee-down:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ayyn-marquee-up,
+  .ayyn-marquee-down {
+    animation: none;
+  }
+}

@@ -1,16 +1,52 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { reviewShots } from "@/data/reviews";
+import { reviewShots, type ReviewShot } from "@/data/reviews";
 import { WA } from "@/lib/constants";
 
-const TILTS = [
-  -1.15, 0.85, 0.35, -0.7, 1.05, -0.4, 0.75, -1, 0.2, 0.9, -0.85, 0.55, -0.3,
+const COLUMNS: ReviewShot[][] = [
+  [reviewShots[0], reviewShots[6], reviewShots[10], reviewShots[4]],
+  [reviewShots[1], reviewShots[5], reviewShots[12], reviewShots[8]],
+  [reviewShots[2], reviewShots[9], reviewShots[7]],
+  [reviewShots[3], reviewShots[11], reviewShots[8], reviewShots[1]],
 ];
+
+const DURATIONS = ["38s", "46s", "34s", "42s"];
+const TILTS = [-1.1, 0.8, -0.5, 1, 0.35, -0.9, 0.6, -0.3];
+
+function ReviewTile({
+  shot,
+  tilt,
+  onOpen,
+}: {
+  shot: ReviewShot;
+  tilt: number;
+  onOpen: () => void;
+}) {
+  return (
+    <figure style={{ transform: `rotate(${tilt}deg)` }}>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="block w-full overflow-hidden rounded-xl bg-blush/40 shadow-[0_8px_22px_rgba(80,50,70,0.12)] ring-1 ring-mauve/15 transition duration-300 hover:scale-[1.03] hover:shadow-[0_12px_28px_rgba(80,50,70,0.18)] sm:rounded-2xl"
+        aria-label={`Open review: ${shot.alt}`}
+      >
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          sizes="(min-width: 1024px) 16vw, 42vw"
+          className="h-auto w-full"
+        />
+      </button>
+    </figure>
+  );
+}
 
 export default function ReviewsGallery() {
   const [open, setOpen] = useState<number | null>(null);
@@ -56,32 +92,46 @@ export default function ReviewsGallery() {
         </p>
       </header>
 
-      <div className="mt-8 columns-1 gap-3 sm:mt-10 sm:columns-2 sm:gap-4 lg:columns-3 lg:gap-5">
-        {reviewShots.map((shot, i) => (
-          <figure
-            key={shot.src}
-            className="mb-3 break-inside-avoid max-sm:!rotate-0 sm:mb-4 lg:mb-5"
-            style={{
-              transform: `rotate(${TILTS[i] ?? 0}deg)`,
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => setOpen(i)}
-              className="block w-full overflow-hidden rounded-2xl bg-blush/40 shadow-[0_10px_28px_rgba(80,50,70,0.12)] ring-1 ring-mauve/15 transition duration-300 hover:scale-[1.015] hover:shadow-[0_16px_40px_rgba(80,50,70,0.18)] sm:rounded-[1.35rem]"
-              aria-label={`Open review: ${shot.alt}`}
-            >
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 92vw"
-                className="h-auto w-full"
-              />
-            </button>
-          </figure>
-        ))}
+      <div
+        className="relative mt-8 h-[28rem] overflow-hidden sm:mt-10 sm:h-[32rem] lg:h-[36rem] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)]"
+      >
+        <div className="mx-auto grid h-full max-w-[58rem] grid-cols-2 gap-2.5 px-1 sm:gap-3 lg:grid-cols-4 lg:gap-4">
+          {COLUMNS.map((col, ci) => (
+            <div key={ci} className="relative overflow-hidden">
+              <div
+                className={`flex flex-col ${
+                  ci % 2 === 0 ? "ayyn-marquee-up" : "ayyn-marquee-down"
+                }`}
+                style={
+                  {
+                    "--marquee-duration": DURATIONS[ci],
+                  } as CSSProperties
+                }
+              >
+                {[0, 1].map((copy) => (
+                  <div
+                    key={copy}
+                    className="flex flex-col gap-2.5 pb-2.5 sm:gap-3 sm:pb-3"
+                    aria-hidden={copy === 1}
+                  >
+                    {col.map((shot, i) => (
+                      <ReviewTile
+                        key={`${copy}-${shot.src}-${i}`}
+                        shot={shot}
+                        tilt={TILTS[(ci + i) % TILTS.length]}
+                        onOpen={() =>
+                          setOpen(
+                            reviewShots.findIndex((s) => s.src === shot.src)
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-8 text-center sm:mt-10">
