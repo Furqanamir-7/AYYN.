@@ -1,11 +1,10 @@
 import Image from "next/image";
 import CollectionsSection from "@/components/CollectionsSection";
-import ReviewCard from "@/components/ReviewCard";
+import ReviewsGallery from "@/components/ReviewsGallery";
 import AnimatedSection from "@/components/AnimatedSection";
 import JsonLd from "@/components/JsonLd";
 import HeroDecor from "@/components/HeroDecor";
 import HeroIdentity from "@/components/HeroIdentity";
-import { reviews, reviewSummary } from "@/data/reviews";
 import { BRAND, WA } from "@/lib/constants";
 
 const faqs = [
@@ -258,30 +257,7 @@ export default function HomePage() {
         id="reviews"
         className="scroll-mt-16 mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12"
       >
-        <div className="rounded-2xl bg-blush/50 px-4 py-7 text-center sm:rounded-[2rem] sm:px-10 sm:py-9">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-mauve-dark sm:text-xs">
-            Reviews
-          </p>
-          <p className="mt-2 font-display text-4xl text-mauve-dark sm:mt-3 sm:text-5xl">
-            {reviewSummary.average}★
-          </p>
-          <p className="mt-1 text-xs text-charcoal/70 sm:mt-2 sm:text-sm">
-            from {reviewSummary.countLabel} orders
-          </p>
-          <a
-            href={WA.review}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex rounded-full bg-mauve px-5 py-2.5 text-sm font-medium text-cream hover:bg-mauve-dark sm:mt-5 sm:px-7 sm:py-3"
-          >
-            Leave a review on WhatsApp
-          </a>
-        </div>
-        <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {reviews.map((r) => (
-            <ReviewCard key={r.id} review={r} />
-          ))}
-        </div>
+        <ReviewsGallery />
       </AnimatedSection>
 
       {/* FAQ */}

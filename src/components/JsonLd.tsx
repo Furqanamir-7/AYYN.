@@ -1,5 +1,5 @@
 import { pressOnProducts } from "@/data/products";
-import { reviews, reviewSummary } from "@/data/reviews";
+import { reviewQuotes, reviewSummary } from "@/data/reviews";
 import { BRAND } from "@/lib/constants";
 
 const SITE = "https://ayyn.store";
@@ -40,12 +40,12 @@ export default function JsonLd() {
       {
         "@type": "AggregateRating",
         ratingValue: reviewSummary.average,
-        reviewCount: 200,
+        reviewCount: reviewSummary.reviewCount,
         itemReviewed: { "@type": "Brand", name: "AYYN." },
       },
-      ...reviews.slice(0, 3).map((r) => ({
+      ...reviewQuotes.map((r) => ({
         "@type": "Review",
-        author: { "@type": "Person", name: r.name },
+        author: { "@type": "Person", name: "AYYN. client" },
         reviewBody: r.text,
         reviewRating: {
           "@type": "Rating",
