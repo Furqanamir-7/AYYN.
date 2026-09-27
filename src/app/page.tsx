@@ -1,5 +1,6 @@
 import Image from "next/image";
 import OfferBanner from "@/components/OfferBanner";
+import FooterTicker from "@/components/FooterTicker";
 import CollectionsSection from "@/components/CollectionsSection";
 import ReviewsGallery from "@/components/ReviewsGallery";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -299,9 +300,11 @@ export default function HomePage() {
       {/* CONTACT */}
       <AnimatedSection
         id="contact"
-        className="scroll-mt-16 mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12"
+        className="scroll-mt-16 pt-0"
       >
-        <div className="rounded-2xl bg-mauve px-5 py-8 text-cream sm:rounded-[2rem] sm:px-8 sm:py-10">
+        <FooterTicker />
+        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+          <div className="rounded-2xl bg-mauve px-5 py-8 text-cream sm:rounded-[2rem] sm:px-8 sm:py-10">
           <h2 className="font-display text-2xl tracking-wide sm:text-3xl md:text-4xl">
             Contact
           </h2>
@@ -342,6 +345,7 @@ export default function HomePage() {
           >
             Questions on WhatsApp
           </a>
+          </div>
         </div>
       </AnimatedSection>
     </>

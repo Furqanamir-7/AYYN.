@@ -3,11 +3,13 @@
 import { usePathname } from "next/navigation";
 import BrandLogo from "./BrandLogo";
 import SiteLink from "./SiteLink";
+import FooterTicker from "./FooterTicker";
 import { BRAND, NAV_LINKS, WA } from "@/lib/constants";
 import { isTemplatePath } from "@/lib/template";
 
 export default function Footer() {
-  const template = isTemplatePath(usePathname());
+  const pathname = usePathname();
+  const template = isTemplatePath(pathname);
 
   return (
     <footer
@@ -96,6 +98,7 @@ export default function Footer() {
       >
         © {new Date().getFullYear()} AYYN. All rights reserved.
       </div>
+      <FooterTicker />
     </footer>
   );
 }
