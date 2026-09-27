@@ -110,18 +110,67 @@ body {
   }
 }
 
-.ayyn-marquee-x {
-  animation: marquee-x 32s linear infinite;
+.marquee-ticker {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  background: rgb(var(--color-mauve));
+  padding: 0.55rem 0;
 }
 
-.ayyn-marquee-x:hover {
+@media (min-width: 1024px) {
+  .marquee-ticker--hero {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 0;
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-x 28s linear infinite;
+}
+
+.marquee-track-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.marquee-item {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(var(--color-cream));
+}
+
+.marquee-flower {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex-shrink: 0;
+  color: rgb(var(--color-cream));
+  opacity: 0.9;
+}
+
+.marquee-ticker:hover .marquee-track {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ayyn-marquee-up,
   .ayyn-marquee-down,
-  .ayyn-marquee-x {
+  .marquee-track {
     animation: none;
   }
 }

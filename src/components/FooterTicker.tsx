@@ -11,39 +11,52 @@ const ITEMS = [
   BRAND.tagline.toUpperCase(),
 ];
 
-function Track({ hidden = false }: { hidden?: boolean }) {
+function Flower() {
   return (
-    <div
-      className="flex shrink-0 items-center"
-      aria-hidden={hidden || undefined}
+    <svg
+      className="marquee-flower"
+      viewBox="0 0 64 64"
+      fill="none"
+      aria-hidden="true"
     >
+      <g fill="currentColor">
+        <ellipse cx="32" cy="19" rx="9.5" ry="13.5" />
+        <ellipse cx="32" cy="19" rx="9.5" ry="13.5" transform="rotate(72 32 32)" />
+        <ellipse cx="32" cy="19" rx="9.5" ry="13.5" transform="rotate(144 32 32)" />
+        <ellipse cx="32" cy="19" rx="9.5" ry="13.5" transform="rotate(216 32 32)" />
+        <ellipse cx="32" cy="19" rx="9.5" ry="13.5" transform="rotate(288 32 32)" />
+      </g>
+    </svg>
+  );
+}
+
+function TrackGroup({ hidden = false }: { hidden?: boolean }) {
+  return (
+    <div className="marquee-track-group" aria-hidden={hidden || undefined}>
       {ITEMS.map((item) => (
-        <span
-          key={item}
-          className="flex items-center gap-5 px-5 sm:gap-6 sm:px-6"
-        >
-          <span aria-hidden className="text-[11px] leading-none sm:text-sm">
-            ★
-          </span>
-          <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.22em] sm:text-xs">
-            {item}
-          </span>
+        <span key={item} className="marquee-item">
+          {item}
+          <Flower />
         </span>
       ))}
     </div>
   );
 }
 
-export default function FooterTicker() {
+export default function FooterTicker({
+  hero = false,
+}: {
+  hero?: boolean;
+}) {
   return (
     <div
-      className="relative z-10 w-full overflow-hidden bg-mauve py-3.5 text-cream [transform:translateZ(0)] sm:py-4"
+      className={`marquee-ticker${hero ? " marquee-ticker--hero" : ""}`}
       role="note"
       aria-label={ITEMS.join(" · ")}
     >
-      <div className="ayyn-marquee-x flex w-max flex-nowrap">
-        <Track />
-        <Track hidden />
+      <div className="marquee-track">
+        <TrackGroup />
+        <TrackGroup hidden />
       </div>
     </div>
   );

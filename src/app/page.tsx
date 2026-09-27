@@ -82,8 +82,9 @@ export default function HomePage() {
       {/* HERO */}
       <section
         id="home"
-        className="relative scroll-mt-16 overflow-hidden px-4 pb-8 pt-6 sm:px-6 sm:pb-12 sm:pt-8"
+        className="relative scroll-mt-16 overflow-hidden"
       >
+        <div className="relative px-4 pb-8 pt-6 sm:px-6 sm:pb-12 sm:pt-8 lg:pb-20">
         <HeroDecor />
         <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
           <HeroIdentity />
@@ -122,6 +123,8 @@ export default function HomePage() {
             </span>
           </div>
         </div>
+        </div>
+        <FooterTicker hero />
       </section>
 
       <OfferBanner />
@@ -300,10 +303,8 @@ export default function HomePage() {
       {/* CONTACT */}
       <AnimatedSection
         id="contact"
-        className="scroll-mt-16 pt-0"
+        className="scroll-mt-16 mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12"
       >
-        <FooterTicker />
-        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
           <div className="rounded-2xl bg-mauve px-5 py-8 text-cream sm:rounded-[2rem] sm:px-8 sm:py-10">
           <h2 className="font-display text-2xl tracking-wide sm:text-3xl md:text-4xl">
             Contact
@@ -346,7 +347,6 @@ export default function HomePage() {
             Questions on WhatsApp
           </a>
           </div>
-        </div>
       </AnimatedSection>
     </>
   );
