@@ -1,7 +1,7 @@
 export const BRAND = {
   name: "AYYN.",
   tagline: "Pretty nails, delivered.",
-  priceFrom: "Sets starting PKR 600",
+  priceFrom: "Sets starting PKR 700",
   delivery: "Delivered in 3–5 days nationwide",
   instagram: "https://www.instagram.com/ayyn.pk/",
   instagramHandle: "@ayyn.pk",
