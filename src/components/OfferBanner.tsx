@@ -16,8 +16,8 @@ export default function OfferBanner() {
         <Image
           src="/offer-banner.png"
           alt={`${BRAND.name} limited time offer — ${OFFER.headline} ${formatPKR(OFFER.pairPrice).replace("PKR ", "Rs. ")} ${OFFER.pill}`}
-          width={1024}
-          height={320}
+          width={3200}
+          height={1000}
           className="h-auto w-full"
           sizes="(min-width: 1024px) 64rem, 100vw"
           priority
