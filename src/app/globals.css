@@ -85,12 +85,15 @@ body {
   }
 }
 
-.ayyn-marquee-up {
-  animation: marquee-up var(--marquee-duration, 40s) linear infinite;
+.ayyn-marquee-up,
+.ayyn-marquee-down {
+  animation-play-state: paused;
 }
 
-.ayyn-marquee-down {
-  animation: marquee-down var(--marquee-duration, 44s) linear infinite;
+.ayyn-marquee-running.ayyn-marquee-up,
+.ayyn-marquee-running.ayyn-marquee-down {
+  animation-play-state: running;
+  will-change: transform;
 }
 
 .ayyn-marquee-up:hover,
@@ -98,9 +101,27 @@ body {
   animation-play-state: paused;
 }
 
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.ayyn-marquee-x {
+  animation: marquee-x 32s linear infinite;
+}
+
+.ayyn-marquee-x:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ayyn-marquee-up,
-  .ayyn-marquee-down {
+  .ayyn-marquee-down,
+  .ayyn-marquee-x {
     animation: none;
   }
 }

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import {
   Product,
   formatPKR,
@@ -16,7 +15,6 @@ import AddToBagControls from "./AddToBagControls";
 
 export default function ProductCard({
   product,
-  index = 0,
 }: {
   product: Product;
   index?: number;
@@ -28,18 +26,7 @@ export default function ProductCard({
   const href = siteHref(`/products/${product.slug}`);
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration: 0.45,
-        delay: Math.min(index * 0.05, 0.35),
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      whileHover={{ y: -4 }}
-      className="group relative overflow-hidden rounded-2xl bg-blush/45 shadow-sm ring-1 ring-mauve/10 transition hover:shadow-soft hover:ring-mauve/25"
-    >
+    <article className="group relative overflow-hidden rounded-2xl bg-blush/45 shadow-sm ring-1 ring-mauve/10 transition hover:-translate-y-0.5 hover:shadow-soft hover:ring-mauve/25">
       <div className="relative aspect-[3/4] w-full cursor-pointer overflow-hidden bg-blush text-left">
         <ProductGallery
           images={gallery}
@@ -84,6 +71,6 @@ export default function ProductCard({
         )}
         <AddToBagControls product={product} />
       </div>
-    </motion.article>
+    </article>
   );
 }

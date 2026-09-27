@@ -16,6 +16,15 @@ export const BRAND = {
   },
 } as const;
 
+export const OFFER = {
+  pairSize: 2,
+  pairPrice: 1350,
+  kitName: "Application Kit",
+  kitPerPair: true,
+  headline: "Any 2 sets for just",
+  pill: "+ FREE Application Kit",
+} as const;
+
 export const NAV_LINKS = [
   { href: "#home", label: "Home" },
   { href: "#collections", label: "Collections" },

@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext";
 import { formatPKR, designBadgeLabel, productImages } from "@/data/products";
 import { cartLineId, lineDisplayName, lineUnitPrice, productFor } from "@/lib/order";
 import { useSiteHref } from "@/hooks/useSiteHref";
+import CartTotals from "./CartTotals";
 
 export default function CartDrawer() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function CartDrawer() {
   const {
     items,
     count,
-    subtotal,
+    pricing,
     open,
     setOpen,
     setQuantity,
@@ -203,14 +204,7 @@ export default function CartDrawer() {
 
               {items.length > 0 && (
                 <div className="border-t border-blush px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-charcoal/70">
-                      {count} {count === 1 ? "item" : "items"}
-                    </span>
-                    <span className="font-display text-xl tracking-wide text-mauve-dark">
-                      {formatPKR(subtotal)}
-                    </span>
-                  </div>
+                  <CartTotals pricing={pricing} count={count} />
                   <p className="mt-1 text-[11px] text-charcoal/55">
                     Nationwide delivery in 3–5 days after we get your screenshot.
                   </p>

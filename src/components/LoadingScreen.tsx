@@ -31,7 +31,7 @@ export default function LoadingScreen() {
     const t = setTimeout(() => {
       setProgress(100);
       setTimeout(() => setVisible(false), 180);
-    }, 900);
+    }, 420);
     return () => clearTimeout(t);
   }, []);
 

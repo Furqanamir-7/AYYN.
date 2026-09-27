@@ -16,6 +16,7 @@ import ProductZoomLightbox from "./ProductZoomLightbox";
 import AddToBagControls from "./AddToBagControls";
 import ProductCard from "./ProductCard";
 import { useSiteHref } from "@/hooks/useSiteHref";
+import { OFFER } from "@/lib/constants";
 
 export default function ProductDetail({
   product,
@@ -80,6 +81,11 @@ export default function ProductDetail({
             {fromPrice ? "From " : ""}
             {formatPKR(price)}
           </p>
+          {product.category === "Press-Ons" && (
+            <p className="mt-1 text-xs text-mauve-dark/90 sm:text-sm">
+              Any 2 sets {formatPKR(OFFER.pairPrice)} + free Application Kit
+            </p>
+          )}
           <p className="mt-3 max-w-md text-sm leading-relaxed text-charcoal/75 sm:text-base">
             {product.description}
           </p>

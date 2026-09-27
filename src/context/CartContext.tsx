@@ -14,16 +14,19 @@ import {
   CART_STORAGE_KEY,
   cartCount,
   cartLineId,
-  cartSubtotal,
+  cartPricing,
   lineDisplayName,
   normalizeCartItems,
   type CartItem,
+  type CartPricing,
 } from "@/lib/order";
 
 type CartContextValue = {
   items: CartItem[];
   count: number;
   subtotal: number;
+  total: number;
+  pricing: CartPricing;
   add: (
     product: Product,
     extras?: { quantity?: number; optionId?: string; bundleSlugs?: string[] }
@@ -123,11 +126,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clear = useCallback(() => setItems([]), []);
 
+  const pricing = useMemo(() => cartPricing(items), [items]);
+
   const value = useMemo<CartContextValue>(
     () => ({
       items,
       count: cartCount(items),
-      subtotal: cartSubtotal(items),
+      subtotal: pricing.original,
+      total: pricing.total,
+      pricing,
       add,
       setQuantity,
       remove,
@@ -139,7 +146,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       bump,
       hydrated,
     }),
-    [add, bump, clear, hydrated, items, open, remove, setQuantity, toast]
+    [add, bump, clear, hydrated, items, open, pricing, remove, setQuantity, toast]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

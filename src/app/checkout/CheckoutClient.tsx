@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Check, Copy, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatPKR } from "@/data/products";
-import { BRAND } from "@/lib/constants";
+import { BRAND, OFFER } from "@/lib/constants";
 import {
   LAST_ORDER_KEY,
   PK_CITIES,
@@ -20,6 +20,7 @@ import {
   type PlacedOrder,
 } from "@/lib/order";
 import { useSiteHref } from "@/hooks/useSiteHref";
+import CartTotals from "@/components/CartTotals";
 
 const emptyDetails: OrderDetails = {
   email: "",
@@ -47,7 +48,7 @@ function loadLastOrder(): PlacedOrder | null {
 export default function CheckoutClient() {
   const router = useRouter();
   const siteHref = useSiteHref();
-  const { items, subtotal, count, clear, hydrated } = useCart();
+  const { items, total, pricing, count, clear, hydrated } = useCart();
   const [details, setDetails] = useState<OrderDetails>(emptyDetails);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [step, setStep] = useState<Step>("details");
@@ -71,7 +72,18 @@ export default function CheckoutClient() {
 
   const lines = useMemo(() => hydrateOrderLines(items), [items]);
   const showing = order && step === "pay" ? order.items : lines;
-  const total = order && step === "pay" ? order.total : subtotal;
+  const payable = order && step === "pay" ? order.total : total;
+  const displayPricing = order && step === "pay"
+    ? {
+        original: order.subtotal ?? order.total,
+        total: order.total,
+        savings: order.savings ?? 0,
+        pairs: order.pairs ?? 0,
+        kitCount: order.kitCount ?? 0,
+        setCount: 0,
+        neededForNextPair: 0,
+      }
+    : pricing;
 
   useEffect(() => {
     if (!hydrated || !ready) return;
@@ -363,7 +375,7 @@ export default function CheckoutClient() {
                     Order {order?.id}
                   </p>
                   <h2 className="mt-1 font-display text-xl tracking-wide text-mauve-dark">
-                    Send {formatPKR(total)}
+                    Send {formatPKR(payable)}
                   </h2>
                   <p className="mt-1 text-xs text-charcoal/70">
                     Same account for both — pick whichever wallet you use.
@@ -444,7 +456,7 @@ export default function CheckoutClient() {
                   <div className="mt-4 rounded-2xl bg-mauve/10 px-4 py-3 text-xs leading-relaxed text-charcoal/75">
                     <p className="font-medium text-mauve-dark">Almost done, love.</p>
                     <p className="mt-1">
-                      Pay the full {formatPKR(total)} on {details.paymentMethod}, then send
+                      Pay the full {formatPKR(payable)} on {details.paymentMethod}, then send
                       the screenshot on WhatsApp. AYYN. already gets this order by email —
                       the screenshot is how we confirm payment and start your set.
                     </p>
@@ -502,20 +514,28 @@ export default function CheckoutClient() {
                     </p>
                   </li>
                 ))}
+                {displayPricing.kitCount > 0 && (
+                  <li className="flex items-center justify-between gap-3 text-sm">
+                    <p className="text-mauve-dark">
+                      {OFFER.kitName}
+                      {displayPricing.kitCount > 1
+                        ? ` × ${displayPricing.kitCount}`
+                        : ""}
+                    </p>
+                    <p className="text-xs font-medium text-mauve-dark">FREE</p>
+                  </li>
+                )}
               </ul>
             )}
-            <div className="mt-4 flex items-center justify-between border-t border-blush pt-3">
-              <span className="text-sm text-charcoal/70">
-                {order && step === "pay" ? order.items.reduce((n, i) => n + i.quantity, 0) : count}{" "}
-                {(order && step === "pay"
-                  ? order.items.reduce((n, i) => n + i.quantity, 0)
-                  : count) === 1
-                  ? "item"
-                  : "items"}
-              </span>
-              <span className="font-display text-2xl tracking-wide text-mauve-dark">
-                {formatPKR(total)}
-              </span>
+            <div className="mt-4 border-t border-blush pt-3">
+              <CartTotals
+                pricing={displayPricing}
+                count={
+                  order && step === "pay"
+                    ? order.items.reduce((n, i) => n + i.quantity, 0)
+                    : count
+                }
+              />
             </div>
             <p className="mt-2 text-[11px] leading-relaxed text-charcoal/55">
               Advance payment only · NayaPay or JazzCash · {BRAND.payment.accountHolder} ·{" "}

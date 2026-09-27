@@ -21,7 +21,7 @@ export default function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Chat with ${BRAND.name} on WhatsApp`}
-        className="flex items-center gap-2 rounded-full bg-mauve text-cream shadow-soft transition hover:bg-mauve-dark animate-pulseGlow
+        className="flex items-center gap-2 rounded-full bg-mauve text-cream shadow-soft transition hover:bg-mauve-dark
           h-12 pl-3.5 pr-4
           sm:h-14 sm:w-14 sm:justify-center sm:px-0"
       >

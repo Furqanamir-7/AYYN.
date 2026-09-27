@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -41,6 +41,7 @@ function ReviewTile({
           width={shot.width}
           height={shot.height}
           sizes="(min-width: 1024px) 16vw, 42vw"
+          quality={55}
           className="h-auto w-full"
         />
       </button>
@@ -51,8 +52,21 @@ function ReviewTile({
 export default function ReviewsGallery() {
   const [open, setOpen] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [running, setRunning] = useState(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const node = scrollerRef.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setRunning(entry.isIntersecting),
+      { rootMargin: "120px", threshold: 0.05 }
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     if (open === null) return;
@@ -93,7 +107,8 @@ export default function ReviewsGallery() {
       </header>
 
       <div
-        className="relative mt-8 h-[28rem] overflow-hidden sm:mt-10 sm:h-[32rem] lg:h-[36rem] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)]"
+        ref={scrollerRef}
+        className="relative mt-8 h-[28rem] overflow-hidden sm:mt-10 sm:h-[32rem] lg:h-[36rem] [content-visibility:auto] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,black_7%,black_93%,transparent)]"
       >
         <div className="mx-auto grid h-full max-w-[58rem] grid-cols-2 gap-2.5 px-1 sm:gap-3 lg:grid-cols-4 lg:gap-4">
           {COLUMNS.map((col, ci) => (
@@ -101,7 +116,7 @@ export default function ReviewsGallery() {
               <div
                 className={`flex flex-col ${
                   ci % 2 === 0 ? "ayyn-marquee-up" : "ayyn-marquee-down"
-                }`}
+                } ${running ? "ayyn-marquee-running" : ""}`}
                 style={
                   {
                     "--marquee-duration": DURATIONS[ci],

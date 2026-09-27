@@ -1,11 +1,13 @@
 import Image from "next/image";
+import OfferBanner from "@/components/OfferBanner";
 import CollectionsSection from "@/components/CollectionsSection";
 import ReviewsGallery from "@/components/ReviewsGallery";
 import AnimatedSection from "@/components/AnimatedSection";
 import JsonLd from "@/components/JsonLd";
 import HeroDecor from "@/components/HeroDecor";
 import HeroIdentity from "@/components/HeroIdentity";
-import { BRAND, WA } from "@/lib/constants";
+import { BRAND, OFFER, WA } from "@/lib/constants";
+import { formatPKR } from "@/data/products";
 
 const faqs = [
   {
@@ -31,6 +33,10 @@ const faqs = [
   {
     q: "How does payment work?",
     a: `Add sets to your bag and checkout on the website. Transfer the total to ${BRAND.payment.accountDisplay} (${BRAND.payment.accountHolder}) on NayaPay or JazzCash, then send the screenshot on WhatsApp. We start your order once that screenshot arrives.`,
+  },
+  {
+    q: "What's the 2-set offer?",
+    a: `Any 2 press-on sets are ${formatPKR(OFFER.pairPrice)} — even if they'd cost more on their own — and a free ${OFFER.kitName} is included with each pair. Extra single sets stay at their listed price. Accessories aren't part of the deal.`,
   },
 ];
 
@@ -84,7 +90,7 @@ export default function HomePage() {
             {BRAND.tagline}
           </p>
           <p className="mt-2 text-xs font-medium text-mauve-dark sm:mt-3 sm:text-sm">
-            {BRAND.priceFrom}
+            {BRAND.priceFrom} · any 2 for {formatPKR(OFFER.pairPrice)}
           </p>
           <p className="mt-0.5 text-xs text-charcoal/65 sm:text-sm">
             {BRAND.delivery}
@@ -116,6 +122,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <OfferBanner />
 
       {/* HOW IT WORKS — right under hero */}
       <AnimatedSection

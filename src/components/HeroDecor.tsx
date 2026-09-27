@@ -6,9 +6,9 @@ export default function HeroDecor() {
       aria-hidden
     >
       {/* soft blush washes */}
-      <div className="absolute -left-20 top-10 h-64 w-64 rounded-full bg-mauve/10 blur-3xl" />
-      <div className="absolute -right-16 top-24 h-72 w-72 rounded-full bg-blush/80 blur-3xl" />
-      <div className="absolute bottom-0 left-1/3 h-48 w-48 rounded-full bg-mauve/10 blur-3xl" />
+      <div className="absolute -left-20 top-10 h-48 w-48 rounded-full bg-mauve/10 blur-2xl" />
+      <div className="absolute -right-16 top-24 h-56 w-56 rounded-full bg-blush/70 blur-2xl" />
+      <div className="absolute bottom-0 left-1/3 h-36 w-36 rounded-full bg-mauve/10 blur-xl" />
 
       {/* floating bows */}
       <Bow className="absolute left-[6%] top-[18%] h-10 w-10 rotate-[-18deg] opacity-50 sm:h-14 sm:w-14 sm:opacity-70" />

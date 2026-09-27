@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FooterTicker from "@/components/FooterTicker";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
@@ -106,6 +107,7 @@ export default function RootLayout({
           <main className="min-h-[70vh]">
             <PageTransition>{children}</PageTransition>
           </main>
+          <FooterTicker />
           <Footer />
           <WhatsAppButton />
         </CartProvider>

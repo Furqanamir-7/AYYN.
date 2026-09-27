@@ -28,7 +28,6 @@ function CollectionBlock({
   if (!items.length) return null;
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
